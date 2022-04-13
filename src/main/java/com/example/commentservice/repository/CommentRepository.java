@@ -9,6 +9,8 @@ import java.util.List;
 
 public interface CommentRepository extends MongoRepository<Comment, String> {
 
+    public List<Comment> findBypostID(String postID, Pageable page);
+
 
 
 
