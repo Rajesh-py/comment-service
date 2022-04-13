@@ -1,0 +1,28 @@
+#eureka:
+#  client:
+#    service-url:
+#      defaultZone: ${eureka_url:http://172.17.0.3:8761/eureka}
+#
+#spring:
+#  application:
+#    name: comment-service
+#  cloud:
+#    discovery:
+#      enabled: true
+#  data:
+#    mongodb:
+#      database: comment_db
+#      port: 27017
+#      host: host.docker.internal
+#server:
+#  port: 3015
+#
+#management:
+#  endpoints:
+#    web:
+#      exposure:
+#        include:
+#          - "*"
+#    endpoint:
+#      health:
+#        show-details: always
