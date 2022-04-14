@@ -26,21 +26,13 @@ public class CommentService {
 
     @Autowired
     LikeService likeFeign;
+    public int commentCount(String postID){
+        int count=this.commentRepository.findByPostID(postID).size();
+        return count;
 
-    public CommentDto findByCommentId(String commentId) {
-        try{
-            Comment comment= commentRepository.findById(commentId).get();
-
-            return new CommentDto(comment.getCommentId(),
-                    userFeign.findID(comment.getCommentedBy()),
-                    comment.getComment(),comment.getCreatedAt(),comment.getUpdatedAt(),
-                    likeFeign.countLike(comment.getCommentId()));
-
-        }
-        catch(Exception e){
-            throw  new CommentNotFoundException(Constants.errorCode);
-        }
     }
+
+
 
 
 

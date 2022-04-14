@@ -26,11 +26,13 @@ public class CommentController {
     @Autowired
     private CommentService commentService;
 
-    @GetMapping("/{commentId}")
-    public ResponseEntity<CommentDto> findByCommentId(@PathVariable("postId") String postID, @PathVariable("commentId") String commentId) {
-        log.info("Inside CommentByID of CommentController");
-        return new ResponseEntity<>(commentService.findByCommentId(commentId), HttpStatus.ACCEPTED);
+
+    @GetMapping("/count")
+    public ResponseEntity<Integer> commentCount(@PathVariable("postId") String postID) {
+        log.info("Inside CommentCount of CommentController");
+        return new ResponseEntity<>(commentService.commentCount(postID), HttpStatus.ACCEPTED);
     }
+
 
 
 
