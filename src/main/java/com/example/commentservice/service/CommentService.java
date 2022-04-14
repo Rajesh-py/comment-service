@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 
 
 @Service
@@ -26,11 +27,20 @@ public class CommentService {
 
     @Autowired
     LikeService likeFeign;
-    public int commentCount(String postID){
-        int count=this.commentRepository.findByPostID(postID).size();
-        return count;
 
+    public CommentDto updateComment(Comment comment, String postID,String commentId) {
+        comment.setCommentId(commentId);
+        comment.setUpdatedAt(new Date());
+        comment.setCreatedAt(commentRepository.findById(commentId).get().getCreatedAt());
+        comment.setPostID(postID);
+        commentRepository.save(comment);
+        return new CommentDto(comment.getCommentId(),
+                userFeign.findID(comment.getCommentedBy()),
+                comment.getComment(),comment.getCreatedAt(),comment.getUpdatedAt(),
+                likeFeign.countLike(comment.getCommentId()));
     }
+
+
 
 
 

@@ -2,6 +2,7 @@ package com.example.commentservice.controller;
 
 
 
+import com.example.commentservice.entity.Comment;
 import com.example.commentservice.model.CommentDto;
 import com.example.commentservice.service.CommentService;
 import org.slf4j.Logger;
@@ -12,8 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-
-
+import javax.validation.Valid;
 
 
 @CrossOrigin(value="*")
@@ -27,12 +27,12 @@ public class CommentController {
     private CommentService commentService;
 
 
-    @GetMapping("/count")
-    public ResponseEntity<Integer> commentCount(@PathVariable("postId") String postID) {
-        log.info("Inside CommentCount of CommentController");
-        return new ResponseEntity<>(commentService.commentCount(postID), HttpStatus.ACCEPTED);
-    }
 
+    @PutMapping("/{commentId}")
+    public ResponseEntity<CommentDto> updateComment(@RequestBody @Valid Comment comment, @PathVariable("postId") String postID, @PathVariable("commentId") String commentId) {
+        log.info("Inside UpdateComment of CommentController");
+        return new ResponseEntity<>(commentService.updateComment(comment, postID, commentId), HttpStatus.ACCEPTED);
+    }
 
 
 
