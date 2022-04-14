@@ -13,8 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
-import javax.ws.rs.QueryParam;
-import java.util.List;
+
 
 
 @CrossOrigin(value="*")
@@ -27,12 +26,12 @@ public class CommentController {
     @Autowired
     private CommentService commentService;
 
-
-    @GetMapping()
-    public ResponseEntity<List<CommentDto>> showCommentsByPostId(@PathVariable("postId") String postID, @QueryParam("page") Integer page, @QueryParam("pageSize") Integer pageSize) {
-        log.info("Inside ListAllComments of CommentController");
-        return new ResponseEntity<>(commentService.showCommentsByPostId(postID,page,pageSize), HttpStatus.ACCEPTED);
+    @GetMapping("/{commentId}")
+    public ResponseEntity<CommentDto> findByCommentId(@PathVariable("postId") String postID, @PathVariable("commentId") String commentId) {
+        log.info("Inside CommentByID of CommentController");
+        return new ResponseEntity<>(commentService.findByCommentId(commentId), HttpStatus.ACCEPTED);
     }
+
 
 
 
