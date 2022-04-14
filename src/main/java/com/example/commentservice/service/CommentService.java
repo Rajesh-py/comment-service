@@ -11,10 +11,8 @@ import com.example.commentservice.repository.CommentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
 
+
 import org.springframework.stereotype.Service;
-
-import java.util.Date;
-
 
 @Service
 public class CommentService {
@@ -28,17 +26,19 @@ public class CommentService {
     @Autowired
     LikeService likeFeign;
 
-    public CommentDto updateComment(Comment comment, String postID,String commentId) {
-        comment.setCommentId(commentId);
-        comment.setUpdatedAt(new Date());
-        comment.setCreatedAt(commentRepository.findById(commentId).get().getCreatedAt());
-        comment.setPostID(postID);
-        commentRepository.save(comment);
-        return new CommentDto(comment.getCommentId(),
-                userFeign.findID(comment.getCommentedBy()),
-                comment.getComment(),comment.getCreatedAt(),comment.getUpdatedAt(),
-                likeFeign.countLike(comment.getCommentId()));
+    public String deletebyCommentId(String commentId) {
+        if(commentRepository.findById(commentId).isPresent()){
+            this.commentRepository.deleteById(commentId);
+            return Constants.successCode;
+        }
+        else{
+            throw new CommentNotFoundException(Constants.errorCode);
+        }
     }
+
+
+
+
 
 
 
